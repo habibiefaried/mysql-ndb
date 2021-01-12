@@ -6,6 +6,7 @@ services:
     command: mysqld
     environment:
       MYSQL_ROOT_PASSWORD: "MySQL2021"
+    container_name: mysqld
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -17,18 +18,22 @@ services:
       MYSQL_PASSWORD: "MySQL2021"
     ports:
       - 50080:80
+    container_name: phpmyadmin
 
   ndb1:
     image: habibiefaried/mysql-ndb:latest
     command: ndbd
+    container_name: ndb1
 
   ndb2:
     image: habibiefaried/mysql-ndb:latest
     command: ndbd
+    container_name: ndb2
 
   nodemgmt:
     image: habibiefaried/mysql-ndb:latest
     command: ndb_mgmd
+    container_name: nodemgmt
 
 # On mysqld, execute this command:
 ## CREATE USER 'root'@'%' IDENTIFIED BY 'MySQL2021';
