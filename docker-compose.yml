@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mysqld:
-    image: mysql/mysql-cluster
+    image: habibiefaried/mysql-ndb:latest
     command: mysqld
     environment:
       MYSQL_ROOT_PASSWORD: "MySQL2021"
@@ -19,19 +19,19 @@ services:
       - 50080:80
 
   ndb1:
-    image: mysql/mysql-cluster
+    image: habibiefaried/mysql-ndb:latest
     command: ndbd
 
   ndb2:
-    image: mysql/mysql-cluster
+    image: habibiefaried/mysql-ndb:latest
     command: ndbd
 
   nodemgmt:
-    image: mysql/mysql-cluster
+    image: habibiefaried/mysql-ndb:latest
     command: ndb_mgmd
 
 # On mysqld, execute this command:
-## select * from information_schema.user_privileges;
 ## CREATE USER 'root'@'%' IDENTIFIED BY 'MySQL2021';
 ## GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 ## FLUSH PRIVILEGES;
+## select * from information_schema.user_privileges;
