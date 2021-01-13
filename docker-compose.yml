@@ -4,65 +4,99 @@ x-env-files:      &env-files
   env_file:
     - .env
 
+x-logging:        &logging
+  driver:         "json-file"
+  options:
+    max-size:     "100m"
+    max-file:     "5"
+
 services:
   mysql-manager-1:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      ndb_mgmd
 
   mysql-manager-2:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      ndb_mgmd
 
   data-node-1:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      ndbd
 
   data-node-2:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      ndbd
 
   mysql-server-1:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      mysqld
     ports:
       - 3306:3306
 
   mysql-server-2:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      mysqld
     ports:
       - 3307:3306
 
   mysql-tester:
-    image:        habibiefaried/mysql-ndb:latest
+    image:        mysql/mysql-cluster:8.0.22-1.1.18-cluster
     <<:           *env-files
+    logging:      *logging
     networks:
       - db-network
     restart:      always
+    volumes:
+      - ./my.cnf:/etc/my.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command:      sleep infinity
 
 networks:
