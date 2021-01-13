@@ -1,42 +1,69 @@
-version: '3'
+version:          "3.4"
+
+x-env-files:      &env-files
+  env_file:
+    - .env
 
 services:
-  mysqld:
-    image: habibiefaried/mysql-ndb:latest
-    command: mysqld
-    environment:
-      MYSQL_ROOT_PASSWORD: "MySQL2021"
-    container_name: mysqld
+  mysql-manager-1:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      ndb_mgmd
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: "mysqld"
-      PMA_USER: "root"
-      PMA_PASSWORD: "MySQL2021"
-      MYSQL_ROOT_PASSWORD: "MySQL2021"
-      MYSQL_PASSWORD: "MySQL2021"
+  mysql-manager-2:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      ndb_mgmd
+
+  data-node-1:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      ndbd
+
+  data-node-2:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      ndbd
+
+  mysql-server-1:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      mysqld
     ports:
-      - 50080:80
-    container_name: phpmyadmin
+      - 3306:3306
 
-  ndb1:
-    image: habibiefaried/mysql-ndb:latest
-    command: ndbd
-    container_name: ndb1
+  mysql-server-2:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      mysqld
+    ports:
+      - 3307:3306
 
-  ndb2:
-    image: habibiefaried/mysql-ndb:latest
-    command: ndbd
-    container_name: ndb2
+  mysql-tester:
+    image:        habibiefaried/mysql-ndb:latest
+    <<:           *env-files
+    networks:
+      - db-network
+    restart:      always
+    command:      sleep infinity
 
-  nodemgmt:
-    image: habibiefaried/mysql-ndb:latest
-    command: ndb_mgmd
-    container_name: nodemgmt
-
-# On mysqld, execute this command:
-## CREATE USER 'root'@'%' IDENTIFIED BY 'MySQL2021';
-## GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-## FLUSH PRIVILEGES;
-## select * from information_schema.user_privileges;
+networks:
+  db-network:
