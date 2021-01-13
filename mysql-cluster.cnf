@@ -4,20 +4,20 @@ DataMemory=80M
 IndexMemory=18M
 
 [ndb_mgmd]
-NodeId=0
-HostName=nodemgmt
-DataDir=/var/lib/mysql
-
-[ndbd]
 NodeId=1
-HostName=ndb1
+HostName=nodemgmt.mysql-ndb_default
 DataDir=/var/lib/mysql
 
 [ndbd]
 NodeId=2
-HostName=ndb2
+HostName=ndb1.mysql-ndb_default
+DataDir=/var/lib/mysql
+
+[ndbd]
+NodeId=3
+HostName=ndb2.mysql-ndb_default
 DataDir=/var/lib/mysql
 
 [mysqld]
-NodeId=3
-HostName=mysqld
+NodeId=4
+HostName=mysqld.mysql-ndb_default
