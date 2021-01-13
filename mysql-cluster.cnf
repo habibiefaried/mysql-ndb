@@ -30,3 +30,4 @@ hostname=mysql-server-1
 [mysqld]
 NodeId=22
 hostname=mysql-server-2
+
