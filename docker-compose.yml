@@ -12,6 +12,7 @@ services:
       - db-network
     restart:      always
     command:      ndb_mgmd
+    container_name: mysql-manager-1
 
   mysql-manager-2:
     image:        habibiefaried/mysql-ndb:latest
@@ -20,6 +21,7 @@ services:
       - db-network
     restart:      always
     command:      ndb_mgmd
+    container_name: mysql-manager-2
 
   data-node-1:
     image:        habibiefaried/mysql-ndb:latest
@@ -28,6 +30,7 @@ services:
       - db-network
     restart:      always
     command:      ndbd
+    container_name: data-node-1
 
   data-node-2:
     image:        habibiefaried/mysql-ndb:latest
@@ -36,6 +39,7 @@ services:
       - db-network
     restart:      always
     command:      ndbd
+    container_name: data-node-2
 
   mysql-server-1:
     image:        habibiefaried/mysql-ndb:latest
@@ -46,6 +50,7 @@ services:
     command:      mysqld
     ports:
       - 3306:3306
+    container_name: mysql-server-1
 
   mysql-server-2:
     image:        habibiefaried/mysql-ndb:latest
@@ -54,8 +59,7 @@ services:
       - db-network
     restart:      always
     command:      mysqld
-    ports:
-      - 3307:3306
+    container_name: mysql-server-2
 
   mysql-tester:
     image:        habibiefaried/mysql-ndb:latest
@@ -64,6 +68,21 @@ services:
       - db-network
     restart:      always
     command:      sleep infinity
+    container_name: mysql-tester
+
+  phpmyadmin:
+    image:        phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=mysql-server-1
+      - PMA_USER=root
+      - PMA_PASSWORD=rootpass
+      - MYSQL_ROOT_PASSWORD=rootpass
+    networks:
+      - db-network
+    ports:
+      - 50080:80
+    restart:      always
+    container_name: phpmyadmin
 
 networks:
   db-network:
