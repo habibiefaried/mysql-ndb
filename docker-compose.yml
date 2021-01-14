@@ -4,17 +4,10 @@ x-env-files:      &env-files
   env_file:
     - .env
 
-x-logging:        &logging
-  driver:         "json-file"
-  options:
-    max-size:     "100m"
-    max-file:     "5"
-
 services:
   mysql-manager-1:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -23,7 +16,6 @@ services:
   mysql-manager-2:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -32,7 +24,6 @@ services:
   data-node-1:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -41,7 +32,6 @@ services:
   data-node-2:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -50,7 +40,6 @@ services:
   mysql-server-1:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -61,7 +50,6 @@ services:
   mysql-server-2:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
@@ -72,7 +60,6 @@ services:
   mysql-tester:
     image:        habibiefaried/mysql-ndb:latest
     <<:           *env-files
-    logging:      *logging
     networks:
       - db-network
     restart:      always
