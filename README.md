@@ -51,7 +51,7 @@ Query OK, 0 rows affected (0.16 sec)
 /usr/share/sysbench# ls
 bulk_insert.lua  oltp_delete.lua  oltp_point_select.lua  oltp_read_write.lua    oltp_update_non_index.lua  select_random_points.lua  tests
 oltp_common.lua  oltp_insert.lua  oltp_read_only.lua     oltp_update_index.lua  oltp_write_only.lua        select_random_ranges.lua
-root@vmi483775:/usr/share/sysbench# sysbench select_random_points.lua --table-size=2000000 --num-threads=1 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 prepare
+root@vmi483775:/usr/share/sysbench# sysbench oltp_read_write.lua --table-size=2000000 --num-threads=1 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 prepare
 sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
 
 Creating table 'sbtest1'...
@@ -61,7 +61,7 @@ Inserting 2000000 records into 'sbtest1'
 4. Run Sysbench
 
 ```
-# sysbench select_random_points.lua --table-size=2000000 --num-threads=100 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 run  
+# sysbench oltp_read_write.lua --table-size=2000000 --num-threads=1 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 run
 
 SQL statistics:
     queries performed:
@@ -93,5 +93,5 @@ Threads fairness:
 5. Cleanup
 
 ```
-sysbench select_random_points.lua --table-size=2000000 --num-threads=100 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 cleanup
+sysbench oltp_read_write.lua --table-size=2000000 --num-threads=1 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 cleanup
 ```
