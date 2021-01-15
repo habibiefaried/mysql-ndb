@@ -1,7 +1,7 @@
 [ndbd default]
 NoOfReplicas=2
-DataMemory=80M
-IndexMemory=18M
+DataMemory=320M
+IndexMemory=72M
 
 [ndb_mgmd]
 NodeId=1
@@ -15,11 +15,13 @@ datadir=/var/lib/mysql
 
 [ndbd]
 NodeId=11
+ServerPort=16100
 hostname=data-node-1
 datadir=/var/lib/mysql
 
 [ndbd]
 NodeId=12
+ServerPort=16100
 hostname=data-node-2
 datadir=/var/lib/mysql
 
