@@ -95,3 +95,8 @@ Threads fairness:
 ```
 sysbench oltp_read_write.lua --table-size=2000000 --num-threads=1 --rand-type=uniform --db-driver=mysql --mysql-db=sysbench --mysql-user=root --mysql-password=rootpass --mysql-host=127.0.0.1 cleanup
 ```
+
+# Port bind usage
+1. Data node: 16100
+2. MySQL server (API): 3306, 33060
+3. MySQL Manager: 1186
